@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>BiRAGAS Cancer Optimizer — When Your Therapy Stops Working, Your Biology Still Has the Answer</title>
+<meta name="description" content="For patients whose melanoma or advanced solid tumor has stopped responding to therapy: BiRAGAS Cancer Optimizer sequences your tumor's transcriptome and runs it through the most advanced causal-inference agentic-AI platform to find the causal pathway driving resistance and direct the most effective, personalized therapy.">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{
+  --bg:#05060f; --bg2:#0a1327; --bg3:#0e1a38;
+  --panel:rgba(255,255,255,.045); --panel2:rgba(255,255,255,.07); --line:rgba(255,255,255,.10);
+  --teal:#1EC8D0; --teal2:#5AE7EC; --cyan:#22d3ee;
+  --gold:#C9A96A; --gold2:#E9D7A6; --goldd:#A9863F;
+  --red:#FF3B5C; --rose:#F0567A; --amber:#F5B15A;
+  --ink:#eaf1ff; --mut:#9fb2d6; --mut2:#7488ad;
+  --sans:"Manrope","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  --body:"Inter",var(--sans); --wrap:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 26px}
+h1,h2,h3,h4{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.06}
+a{color:inherit;text-decoration:none}
+.grad{background:linear-gradient(100deg,var(--teal2),var(--gold2) 55%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font-family:var(--sans);font-weight:800;letter-spacing:.22em;text-transform:uppercase;font-size:12px;color:var(--teal2)}
+.eyebrow.g{color:var(--gold)}.eyebrow.r{color:var(--rose)}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-weight:700;font-size:15px;border-radius:999px;padding:14px 28px;cursor:pointer;border:none;transition:.2s;position:relative}
+.btn-pri{background:linear-gradient(120deg,var(--teal),var(--cyan));color:#04121a;box-shadow:0 10px 34px rgba(30,200,208,.34)}
+.btn-pri:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(30,200,208,.5)}
+.btn-gold{background:linear-gradient(120deg,var(--gold2),var(--gold));color:#1c1405;box-shadow:0 10px 30px rgba(201,169,106,.32)}
+.btn-gold:hover{transform:translateY(-3px)}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold2)}
+section{position:relative;padding:100px 0}
+.shead{max-width:820px;margin:0 auto 56px;text-align:center}
+.shead h2{font-size:clamp(30px,4.6vw,52px);margin:12px 0 16px}
+.shead p{color:var(--mut);font-size:18px}
+.glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;pointer-events:none;z-index:0}
+
+/* NAV */
+header.nav{position:fixed;top:0;left:0;right:0;z-index:80;background:rgba(5,6,15,.55);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,169,106,.12);transition:.3s}
+header.nav.scrolled{background:rgba(5,6,15,.86)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand img{height:24px}
+.brand .sub{font-family:var(--sans);font-size:15px;font-weight:800;letter-spacing:.01em;color:var(--gold2);border-left:1px solid rgba(201,169,106,.35);padding-left:11px}
+@media(max-width:520px){.brand .sub{font-size:12.5px;padding-left:8px}}
+.nl{display:flex;align-items:center;gap:26px}
+.nl a{color:var(--mut);font-size:13.5px;font-weight:600;transition:.15s}
+.nl a:hover{color:var(--gold2)}
+.nl .btn{padding:9px 18px;font-size:13.5px}
+.nl a.btn-pri,.nl a.btn-pri:hover{color:#04121a}
+.burger{display:none;background:none;border:none;color:var(--gold2);font-size:25px;cursor:pointer}
+@media(max-width:960px){.nl{position:fixed;inset:70px 0 auto 0;background:rgba(5,8,20,.98);flex-direction:column;align-items:flex-start;gap:0;padding:8px 26px 20px;transform:translateY(-160%);transition:.3s}.nl.open{transform:none}.nl a{width:100%;padding:13px 0;border-bottom:1px solid var(--line)}.burger{display:block}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:70px}
+#bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero:before{content:"";position:absolute;inset:0;background:
+  radial-gradient(900px 600px at 78% 15%,rgba(30,200,208,.16),transparent 60%),
+  radial-gradient(760px 560px at 15% 80%,rgba(201,169,106,.13),transparent 60%),
+  linear-gradient(180deg,transparent 55%,var(--bg) 96%);z-index:1;pointer-events:none}
+.hero .wrap{text-align:center}
+.hero-in{position:relative;z-index:3;max-width:1080px;margin:0 auto}
+.hero .kicker{font-family:var(--sans);font-weight:800;letter-spacing:.26em;text-transform:uppercase;font-size:12px;color:var(--gold2);display:block;margin-bottom:20px}
+.brandtitle{line-height:.88;margin:0}
+.brandtitle .bk{display:block;font-family:var(--sans);font-weight:800;letter-spacing:.22em;text-transform:uppercase;font-size:clamp(16px,2.7vw,30px);color:var(--gold2);margin-bottom:10px}
+.brandtitle .co{display:block;font-size:clamp(48px,10.5vw,128px);font-weight:800;letter-spacing:-.035em;text-shadow:0 0 70px rgba(90,231,236,.28)}
+.hero .allcancer{font-size:clamp(18px,2.6vw,27px);font-weight:600;color:var(--ink);max-width:60ch;margin:28px auto 12px;line-height:1.4}
+.hero .emot{font-size:clamp(15px,1.9vw,19px);color:#c6d4ef;max-width:60ch;margin:0 auto 30px;line-height:1.6}
+.hero .emot .grad{font-weight:700}
+.three-simple{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:36px 0 0}
+.three-simple .s{display:flex;align-items:center;gap:11px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 20px;font-size:14.5px;font-weight:600;backdrop-filter:blur(6px)}
+.three-simple .s b{color:var(--teal2);font-family:var(--sans);font-size:16px}
+.three-simple .arrow{color:var(--gold);font-size:22px;font-weight:800}
+@media(max-width:640px){.three-simple .arrow{display:none}.three-simple .s{width:100%;justify-content:center}}
+.hero .lead{font-size:clamp(17px,2.1vw,22px);color:#c6d4ef;max-width:60ch;margin:24px auto 12px}
+.hero .ctas{display:flex;gap:15px;flex-wrap:wrap}
+.hero .metrics{display:flex;gap:34px;flex-wrap:wrap;margin-top:52px;padding-top:26px;border-top:1px solid var(--line)}
+.hero .metrics div b{font-family:var(--sans);font-size:30px;font-weight:800;display:block;line-height:1}
+.hero .metrics div span{font-size:12.5px;color:var(--mut2)}
+.scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;color:var(--mut2);font-size:11px;letter-spacing:.2em;text-transform:uppercase;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0);opacity:.6}50%{transform:translate(-50%,7px);opacity:1}}
+
+/* TRUTH section */
+.truth{background:linear-gradient(180deg,var(--bg),var(--bg2))}
+.truth .wrap{max-width:900px;text-align:center;position:relative;z-index:2}
+.truth h2{font-size:clamp(28px,4.3vw,46px);margin-bottom:22px}
+.truth p{color:var(--mut);font-size:19px;margin-bottom:16px}
+.truth .big{color:var(--ink);font-size:clamp(20px,2.6vw,26px);font-weight:600}
+
+/* cards / tilt */
+.tilt{transform-style:preserve-3d;transition:transform .12s ease-out;will-change:transform}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px;position:relative;overflow:hidden;backdrop-filter:blur(6px)}
+.card:before{content:"";position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(140deg,rgba(90,231,236,.4),transparent 40%,transparent 60%,rgba(201,169,106,.4));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:.3s}
+.card:hover:before{opacity:1}
+
+/* RESIST (six patterns) */
+.resist{background:var(--bg2)}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:900px){.pgrid{grid-template-columns:1fr}}
+.pcard{cursor:pointer}
+.pcard .pn{font-family:var(--sans);font-size:15px;font-weight:800;color:#04121a;background:linear-gradient(120deg,var(--teal2),var(--gold2));width:38px;height:38px;border-radius:11px;display:grid;place-items:center}
+.pcard .cnt{float:right;font-size:11.5px;font-weight:800;color:#fff;background:rgba(255,59,92,.85);border-radius:20px;padding:4px 11px}
+.pcard h4{font-size:17px;margin:14px 0 4px}
+.pcard .sub{color:var(--rose);font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.pcard .ex{font-size:13.5px;color:var(--mut)}
+.pcard .more{max-height:0;overflow:hidden;transition:max-height .35s}
+.pcard.open .more{max-height:320px}
+.pcard .layer{margin-top:14px;padding-top:13px;border-top:1px dashed var(--line);font-size:13.5px;color:#cfe0ff}
+.pcard .layer b{color:var(--gold2)}
+.pcard .tog{margin-top:12px;color:var(--teal2);font-weight:700;font-size:12.5px}
+
+/* JOURNEY */
+.journey{background:linear-gradient(180deg,var(--bg2),var(--bg))}
+.jwrap{position:relative}
+.jline{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(var(--teal),var(--gold),var(--rose));transform:translateX(-50%);opacity:.4}
+@media(max-width:820px){.jline{left:26px}}
+.jstep{display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;gap:0;margin:34px 0;position:relative}
+.jstep .jcard{grid-column:1}
+.jstep:nth-child(even) .jcard{grid-column:3}
+.jnode{grid-column:2;justify-self:center;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-family:var(--sans);font-weight:800;font-size:22px;color:#04121a;background:radial-gradient(circle at 35% 30%,var(--teal2),var(--teal));box-shadow:0 0 0 6px rgba(30,200,208,.12),0 0 40px rgba(30,200,208,.5);z-index:2}
+.jstep:nth-child(3) .jnode{background:radial-gradient(circle at 35% 30%,var(--gold2),var(--gold));box-shadow:0 0 0 6px rgba(201,169,106,.14),0 0 40px rgba(201,169,106,.5)}
+.jstep:nth-child(4) .jnode{background:radial-gradient(circle at 35% 30%,#ff8aa0,var(--rose));box-shadow:0 0 0 6px rgba(240,86,122,.14),0 0 40px rgba(240,86,122,.5)}
+.jcard h3{font-size:21px;margin-bottom:8px}
+.jcard .tag{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--teal2);margin-bottom:8px;display:block}
+.jcard p{color:var(--mut);font-size:15px}
+@media(max-width:820px){.jstep{grid-template-columns:56px 1fr;gap:16px}.jstep .jcard,.jstep:nth-child(even) .jcard{grid-column:2}.jnode{grid-column:1;width:52px;height:52px;font-size:18px}}
+
+/* ENGINE */
+.engine{background:var(--bg)}
+.stagerow{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 40px}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:13px;font-weight:700;font-family:var(--sans);display:flex;align-items:center;gap:8px}
+.stage b{color:var(--teal2)}
+.modgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:960px;margin:0 auto}
+@media(max-width:820px){.modgrid{grid-template-columns:repeat(2,1fr)}}
+.mod{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center;transition:.2s}
+.mod:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 10px 30px rgba(30,200,208,.18)}
+.mod b{font-family:var(--sans);font-size:14px;display:block;color:var(--gold2)}
+.mod span{font-size:11px;color:var(--mut2)}
+
+/* DEMO */
+.demo{background:var(--bg2)}
+.demo-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+@media(max-width:860px){.demo-grid{grid-template-columns:1fr}}
+.demo canvas{width:100%;height:340px;background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:18px}
+.seg{display:inline-flex;background:rgba(255,255,255,.06);border-radius:12px;padding:5px;margin:16px 0}
+.seg button{background:none;border:none;color:var(--mut);font-weight:700;font-size:13px;padding:9px 16px;border-radius:9px;cursor:pointer;font-family:var(--sans)}
+.seg button.on{background:linear-gradient(120deg,var(--teal),var(--cyan));color:#04121a}
+
+/* AUDIENCE */
+.aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:820px){.aud-grid{grid-template-columns:1fr}}
+.aud{padding:34px}
+.aud h3{font-size:24px;margin:6px 0 12px}
+.aud ul{list-style:none;margin-top:14px}
+.aud li{padding:9px 0 9px 26px;position:relative;color:var(--mut);font-size:14.5px}
+.aud li:before{content:"›";position:absolute;left:6px;color:var(--teal2);font-weight:800}
+
+/* CTA */
+.cta{background:radial-gradient(700px 400px at 50% 0,rgba(30,200,208,.14),transparent 60%),var(--bg);text-align:center}
+.cta h2{font-size:clamp(30px,5vw,54px);max-width:20ch;margin:0 auto 18px}
+.cta p{color:var(--mut);max-width:56ch;margin:0 auto 30px;font-size:18px}
+.disc{max-width:820px;margin:44px auto 0;color:var(--mut2);font-size:12.5px;border-top:1px solid var(--line);padding-top:22px}
+footer{background:var(--bg);border-top:1px solid var(--line);padding:34px 0;color:var(--mut2);font-size:13px;text-align:center}
+footer .fl{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+footer a:hover{color:var(--gold2)}
+.reveal{opacity:0;transform:translateY(28px);transition:.8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/biragas_wordmark_gold.png" alt="BiRAGAS"><span class="sub">Cancer Optimizer</span></a>
+    <nav class="nl" id="nl">
+      <a href="#truth">Non-Responders</a>
+      <a href="#resist">How Tumors Resist</a>
+      <a href="#journey">The Journey</a>
+      <a href="#engine">The Engine</a>
+      <a href="#evidence">Evidence</a>
+      <a class="btn btn-pri" href="mailto:biragas@ayassbioscience.com?subject=BiRAGAS%20Cancer%20Optimizer%20Causal%20Analysis%20Request&body=Name%3A%0ARole%20(patient%2Ffamily%2Foncologist%2Fpartner)%3A%0ACancer%20type%20(e.g.%20melanoma%2C%20advanced%20solid%20tumor)%3A%0ACurrent%2Fprior%20therapy%20%26%20resistance%20context%3A%0AWhat%20you%27d%20like%20to%20explore%3A">Request a causal analysis →</a>
+    </nav>
+    <button class="burger" id="burger">☰</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <canvas id="bg"></canvas>
+  <div class="wrap"><div class="hero-in">
+    <span class="kicker">Ayass Bio-Science · Causal-AI Precision Oncology</span>
+    <h1 class="brandtitle"><span class="bk">BiRAGAS</span><span class="co grad">Cancer Optimizer</span></h1>
+    <p class="allcancer">For every advanced cancer that has stopped responding to therapy, melanoma, lung, breast,
+      colorectal, pancreatic, and any other advanced solid or blood tumor, when the treatment stops working, the
+      answer is written in your tumor's own biology.</p>
+    <p class="emot">Resistance is not the end of the road. It is a <span class="grad">mechanism</span> we can read,
+      and a direction we can find.</p>
+    <div class="ctas" style="justify-content:center">
+      <a class="btn btn-pri" href="mailto:biragas@ayassbioscience.com?subject=BiRAGAS%20Cancer%20Optimizer%20Causal%20Analysis%20Request&body=Name%3A%0ARole%20(patient%2Ffamily%2Foncologist%2Fpartner)%3A%0ACancer%20type%20(e.g.%20melanoma%2C%20advanced%20solid%20tumor)%3A%0ACurrent%2Fprior%20therapy%20%26%20resistance%20context%3A%0AWhat%20you%27d%20like%20to%20explore%3A">Request a causal analysis →</a>
+      <a class="btn btn-ghost" href="#journey">See how it works</a>
+    </div>
+    <div class="three-simple">
+      <div class="s"><b>1</b> We read your tumor's RNA</div>
+      <span class="arrow">→</span>
+      <div class="s"><b>2</b> We find <em>why</em> it resists</div>
+      <span class="arrow">→</span>
+      <div class="s"><b>3</b> We match the right therapy</div>
+    </div>
+  </div></div>
+  <div class="scrollcue">scroll</div>
+</section>
+
+<!-- TRUTH -->
+<section class="truth" id="truth">
+  <div class="glow" style="width:420px;height:420px;background:rgba(240,86,122,.5);top:-80px;right:8%"></div>
+  <div class="wrap reveal">
+    <div class="eyebrow r">You are not out of options</div>
+    <h2>A therapy that stops working is <span class="grad">information</span>, not a verdict.</h2>
+    <p>Resistance and non-response are rarely bad luck. When melanoma or an advanced solid tumor escapes a drug, it
+      usually does so through a specific, readable biological mechanism, a pathway it switched on, a target that was
+      never really the driver, a route it rerouted around.</p>
+    <p class="big">The same biology that explains why a treatment failed can point toward one that won't. We read that
+      biology, causally, and hand your oncologist a direction grounded in cause.</p>
+  </div>
+</section>
+
+<!-- RESIST -->
+<section class="resist" id="resist">
+  <div class="glow" style="width:400px;height:400px;background:rgba(30,200,208,.3);top:20%;left:-6%"></div>
+  <div class="wrap">
+    <div class="shead reveal">
+      <div class="eyebrow r">How tumors resist</div>
+      <h2>Six ways a therapy stops working, <span class="grad">each with a causal answer</span></h2>
+      <p>Drawn from a real, cited read of <strong>329 failed Phase-3 trials (2015–2025)</strong> across oncology and
+        melanoma. Tap any pattern for the real example and how BiRAGAS resolves it.</p>
+    </div>
+    <div class="pgrid" id="pgrid"></div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="journey" id="journey">
+  <div class="wrap">
+    <div class="shead reveal">
+      <div class="eyebrow">The BiRAGAS Cancer Optimizer journey</div>
+      <h2>From your tumor tissue to a <span class="grad">personalized, causal</span> treatment direction</h2>
+      <p>Five stages. Scattered molecular signal enters; a certified causal answer, and a therapy matched to your
+        resistance mechanism, comes out.</p>
+    </div>
+    <div class="jwrap">
+      <div class="jline"></div>
+      <div class="jstep reveal"><div class="jnode">1</div><div class="jcard card tilt"><span class="tag">Sequence</span><h3>NGS transcriptome of your tumor</h3><p>Next-generation sequencing reads the full RNA expression of your tumor tissue, the live molecular state of the cancer <em>as it resists</em>, not a snapshot from diagnosis.</p></div></div>
+      <div class="jstep reveal"><div class="jnode">2</div><div class="jcard card tilt"><span class="tag">Model</span><h3>Into the BiRAGAS causal engine</h3><p>Your sequencing data enters BiRAGAS, an agentic-AI bioinformatics platform. Ten evidence modules on one scale build a conditional-independence skeleton, not a correlation gate.</p></div></div>
+      <div class="jstep reveal"><div class="jnode">3</div><div class="jcard card tilt"><span class="tag">Find the cause</span><h3>The causal pathway driving resistance</h3><p>BiRAGAS assembles a certified causal DAG and runs in-silico perturbations to identify the <em>causal pathway</em> your tumor is using to escape the therapy, the mechanism, not a correlate.</p></div></div>
+      <div class="jstep reveal"><div class="jnode">4</div><div class="jcard card tilt"><span class="tag">Validate</span><h3>Refuted, calibrated, honest</h3><p>Every causal claim is stress-tested with placebo and bootstrap refutation, and when a signal can't be identified from the data, the engine abstains. No false hope, only claims that survive scrutiny.</p></div></div>
+      <div class="jstep reveal"><div class="jnode">5</div><div class="jcard card tilt"><span class="tag">Direct therapy</span><h3>Tailored therapeutic options</h3><p>From the causal drivers, BiRAGAS surfaces the therapeutic options most likely to work against <em>your</em> specific resistance mechanism, an evidence-traced direction for your oncologist and tumor board.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINE -->
+<section class="engine" id="engine">
+  <div class="glow" style="width:460px;height:460px;background:rgba(201,169,106,.28);bottom:0;right:0"></div>
+  <div class="wrap">
+    <div class="shead reveal">
+      <div class="eyebrow g">Inside the engine</div>
+      <h2>The most advanced <span class="grad">causal-inference agentic AI</span> in bioinformatics</h2>
+      <p>BiRAGAS turns discovery from correlation-seeded into genuinely causal: seven stages, ten evidence modules, and
+        a certified causal DAG, proven by 34 automated tests and a benchmark.</p>
+    </div>
+    <div class="stagerow reveal">
+      <div class="stage"><b>1</b> Ingest</div><div class="stage"><b>2</b> Skeleton</div><div class="stage"><b>3</b> Stabilize</div>
+      <div class="stage"><b>4</b> Anchor</div><div class="stage"><b>5</b> Prune</div><div class="stage"><b>6</b> Fuse</div>
+      <div class="stage"><b>7</b> Estimate · Refute · Abstain</div>
+    </div>
+    <div class="modgrid reveal" id="modgrid"></div>
+    <p class="reveal" style="text-align:center;color:var(--mut);max-width:760px;margin:34px auto 0;font-size:15px">
+      It replaces correlation seeding and hand-set weights with a conditional-independence skeleton, bootstrap
+      stability selection with a finite false-edge bound, an AIPW effect estimator, a structural causal model for
+      in-silico perturbation, and honest abstention. <span style="color:var(--gold2)">Missing evidence degrades
+      gracefully and is never fabricated.</span></p>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="demo" id="demo">
+  <div class="wrap demo-grid">
+    <div class="reveal"><canvas id="dag" width="560" height="340"></canvas></div>
+    <div class="reveal">
+      <div class="eyebrow">The core distinction</div>
+      <h2 style="font-size:clamp(26px,3.4vw,40px);margin:10px 0 14px">Resistance is a <span class="grad">causal</span> question.</h2>
+      <p style="color:var(--mut)">A correlation map is a hairball, and the node your drug hits may be a passenger.
+        BiRAGAS keeps correlation only as a starting skeleton, then prunes and orients it with interventional evidence,
+        CRISPR, perturbation, genetics, time, into a directed causal graph with the driver made visible.</p>
+      <div class="seg"><button id="segCorr" class="on" onclick="setMode('corr')">Correlation</button><button id="segCaus" onclick="setMode('caus')">BiRAGAS causal graph</button></div>
+      <div id="demoNote" style="color:var(--gold2);font-weight:600;font-size:14px">Correlation view: dense, undirected, the resistance driver hidden among passengers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- EVIDENCE -->
+<section class="evidence" id="evidence">
+  <div class="wrap">
+    <div class="shead reveal">
+      <div class="eyebrow g">Evidence &amp; integrity</div>
+      <h2>Real data. Cited. <span class="grad">Never fabricated.</span></h2>
+    </div>
+    <div class="aud-grid reveal" style="grid-template-columns:repeat(4,1fr);gap:16px" id="statgrid"></div>
+    <p class="reveal" style="text-align:center;color:var(--mut);max-width:800px;margin:30px auto 0;font-size:15px">
+      The failure landscape is assembled from ClinicalTrials.gov API v2, PubMed (PMID/DOI), and openFDA. No trials,
+      drugs, dates, or results are fabricated; where a cause is not in the public record, it is marked unspecified.
+      BiRAGAS Cancer Optimizer is a research and decision-support platform, it does not diagnose, treat, or replace a
+      licensed physician.</p>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="who">
+  <div class="wrap">
+    <div class="aud-grid">
+      <div class="aud card tilt reveal"><div class="eyebrow">For patients &amp; families</div><h3>Understand <em>why</em>, and what's next</h3>
+        <ul><li>A miss is information: the biology that explains it can point somewhere better.</li>
+        <li>Your tumor's transcriptome reveals the resistance mechanism at work right now.</li>
+        <li>We support, never replace, your oncologist, every decision stays with your care team.</li>
+        <li>Honest by design: when the data can't answer, we say so.</li></ul></div>
+      <div class="aud card tilt reveal"><div class="eyebrow g">For oncologists &amp; tumor boards</div><h3>A causal second read on a stalled case</h3>
+        <ul><li>Causal-driver identification with an evidence trail you can interrogate.</li>
+        <li>In-silico perturbation exposes compensatory rerouting and redundancy.</li>
+        <li>Responder stratification, matched to the causal subgroup.</li>
+        <li>Refutation + honest abstention, no black-box confidence at the board.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="start">
+  <div class="wrap">
+    <div class="eyebrow">Begin the analysis</div>
+    <h2>Bring a resistant or non-responding case to the <span class="grad">causal engine</span></h2>
+    <p>For patients, families, oncologists, and research partners: request a causal analysis of a resistance or
+      non-response case, or a walkthrough of the platform. Your treating physician stays in control of every decision.</p>
+    <div class="ctas" style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap">
+      <a class="btn btn-pri" href="mailto:biragas@ayassbioscience.com?subject=BiRAGAS%20Cancer%20Optimizer%20Causal%20Analysis%20Request&body=Name%3A%0ARole%20(patient%2Ffamily%2Foncologist%2Fpartner)%3A%0ACancer%20type%20(e.g.%20melanoma%2C%20advanced%20solid%20tumor)%3A%0ACurrent%2Fprior%20therapy%20%26%20resistance%20context%3A%0AWhat%20you%27d%20like%20to%20explore%3A">Request an analysis →</a>
+      <a class="btn btn-ghost" href="https://mayasss-gif.github.io/BiRAGAS-Deployed-Engine-Field-Guide/" target="_blank" rel="noopener">See the engine field guide</a>
+    </div>
+    <div class="disc"><strong style="color:var(--gold2)">Medical disclaimer.</strong> BiRAGAS Cancer Optimizer provides
+      research-grade causal analysis and decision-support information for healthcare professionals. It is not a
+      diagnosis, not a treatment recommendation, and not a substitute for professional medical care. Always consult
+      your treating physician; never alter or discontinue treatment without your care team.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="fl"><a href="#top">BiRAGAS Cancer Optimizer</a><a href="#journey">The Journey</a><a href="#engine">The Engine</a>
+    <a href="https://mayasss-gif.github.io/BiRAGAS-Deployed-Engine-Field-Guide/" target="_blank" rel="noopener">Field Guide</a>
+    <a href="https://mayasss-gif.github.io/biragas-failed-phase3-onepager/" target="_blank" rel="noopener">Why Trials Fail</a>
+    <a href="https://biragas.com" target="_blank" rel="noopener">biragas.com</a></div>
+  Engine by BiRAGAS · AYASS BIO-SCIENCE, LLC · Research &amp; decision-support use only.
+</footer>
+
+<script>
+/* ---------- data ---------- */
+const PATTERNS=[
+ {n:1,cnt:"6 trials",t:"The target was a passenger, not the driver",sub:"Association ≠ causation",
+  ex:"Epacadostat (IDO1) + pembrolizumab in melanoma — ECHO-301 missed; the pathway was correlated but not causal.",
+  layer:"<b>Causal-driver identification.</b> BiRAGAS separates the true driver from correlated passengers, with an evidence trail, before a target guides a decision."},
+ {n:2,cnt:"10 trials",t:"The tumor rerouted around a redundant block",sub:"Compensatory rerouting",
+  ex:"Etrolizumab (β₇ homing) — clean target engagement, program dropped; the pathway was redundant.",
+  layer:"<b>In-silico perturbation.</b> Knock out the node across the causal network — redundancy shows up as a buffered effect, a flag to combine or pick a higher-leverage target."},
+ {n:3,cnt:"1 trial*",t:"Right drug, wrong (unenriched) patient",sub:"Signal diluted by non-responders",
+  ex:"Selumetinib (MEK) in uveal melanoma — SUMIT negative in an all-comers population.",
+  layer:"<b>Patient stratification.</b> Find whether a target is truly <em>your</em> driver, instead of averaging a real effect to zero."},
+ {n:4,cnt:"16 trials",t:"On-mechanism toxicity outran the benefit",sub:"Adverse causal neighbourhood",
+  ex:"Brodalumab (IL-17RA) met efficacy but a safety signal drove a boxed warning — later revived under a REMS.",
+  layer:"<b>Multi-evidence validation.</b> Reason about on-mechanism safety from the target's causal neighbourhood before committing."},
+ {n:5,cnt:"8 trials",t:"A mixed disease averaged the effect to zero",sub:"Endophenotype heterogeneity",
+  ex:"Cobitolimod — Phase 3 remission 44.4% vs 46.5% placebo: heterogeneous disease, not an inert drug.",
+  layer:"<b>Endophenotype stratification.</b> Tighten to the active molecular driver, cutting heterogeneity that averages real effects away."},
+ {n:6,cnt:"13 trials",t:"A combination built on hope, not synergy",sub:"Additive, not causal",
+  ex:"The IDO1 + PD-1 wave stacked toxicity without added efficacy — built on co-expression, not counterfactuals.",
+  layer:"<b>Counterfactual combination design.</b> Predict where a second perturbation adds non-redundant leverage, from the network, not correlation."}
+];
+const MODS=[["CRISPR-IV","interventional"],["L1000","perturbation"],["MR","genetic"],["SIGNOR","mechanistic"],["DoRothEA","regulon"],["Granger","temporal"],["Ensemble","discovery"],["DepMap","dependency"],["MAGeCK","screen"],["PROGENy","pathway"]];
+const STATS=[["329","real failed Phase-3 trials"],["6","recurring resistance patterns"],["10","evidence modules"],["7","engine stages · 34 tests"]];
+
+const pg=document.getElementById('pgrid');
+PATTERNS.forEach(p=>{const d=document.createElement('div');d.className='pcard card tilt reveal';
+ d.innerHTML=`<span class="cnt">${p.cnt}</span><div class="pn">${p.n}</div><h4>${p.t}</h4><div class="sub">${p.sub}</div><div class="ex">${p.ex}</div><div class="more"><div class="layer">${p.layer}</div></div><div class="tog">How BiRAGAS resolves it →</div>`;
+ d.addEventListener('click',()=>d.classList.toggle('open'));pg.appendChild(d);});
+const mg=document.getElementById('modgrid');
+MODS.forEach(m=>{const d=document.createElement('div');d.className='mod';d.innerHTML=`<b>${m[0]}</b><span>${m[1]}</span>`;mg.appendChild(d);});
+const sg=document.getElementById('statgrid');
+STATS.forEach(s=>{const d=document.createElement('div');d.className='card';d.style.textAlign='center';d.innerHTML=`<div class="grad" style="font-family:var(--sans);font-weight:800;font-size:40px;line-height:1">${s[0]}</div><div style="color:var(--mut);font-size:13px;margin-top:6px">${s[1]}</div>`;sg.appendChild(d);});
+
+/* nav + reveal + tilt */
+const nav=document.getElementById('nav');addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+const burger=document.getElementById('burger'),nl=document.getElementById('nl');burger.onclick=()=>nl.classList.toggle('open');
+nl.querySelectorAll('a').forEach(a=>a.onclick=()=>nl.classList.remove('open'));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('.tilt').forEach(el=>{el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(800px) rotateY(${x*7}deg) rotateX(${-y*7}deg) translateY(-3px)`;});el.addEventListener('mouseleave',()=>el.style.transform='');});
+
+/* ---------- THREE.js hero: DNA helix + causal starfield ---------- */
+(function(){
+ if(!window.THREE){return;}
+ const canvas=document.getElementById('bg');
+ const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+ renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+ const scene=new THREE.Scene();
+ const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,400);cam.position.set(0,0,52);
+ function tex(){const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d');const gr=g.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.3,'rgba(255,255,255,.75)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(0,0,64,64);return new THREE.CanvasTexture(c);}
+ const sprite=tex();
+ const group=new THREE.Group();scene.add(group);
+ // DNA double helix
+ const N=150,turns=6,R=9,Hh=60;
+ const posA=[],posB=[],colA=[],colB=[];
+ const teal=new THREE.Color(0x1EC8D0),gold=new THREE.Color(0xC9A96A),red=new THREE.Color(0xFF3B5C);
+ const rungPos=[],rungCol=[];
+ for(let i=0;i<N;i++){const t=i/N,a=t*turns*Math.PI*2,y=(t-.5)*Hh;
+   const ax=Math.cos(a)*R,az=Math.sin(a)*R,bx=Math.cos(a+Math.PI)*R,bz=Math.sin(a+Math.PI)*R;
+   posA.push(ax,y,az);posB.push(bx,y,bz);
+   const cA=teal.clone().lerp(gold,t);const cB=gold.clone().lerp(teal,t);
+   colA.push(cA.r,cA.g,cA.b);colB.push(cB.r,cB.g,cB.b);
+   if(i%3===0){const isRes=(i>N*0.45&&i<N*0.6);const rc=isRes?red:new THREE.Color(0x2a3f66);
+     rungPos.push(ax,y,az,bx,y,bz);for(let k=0;k<2;k++)rungCol.push(rc.r,rc.g,rc.b);}}
+ function pts(arr,carr,size){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(arr,3));g.setAttribute('color',new THREE.Float32BufferAttribute(carr,3));
+   return new THREE.Points(g,new THREE.PointsMaterial({size,map:sprite,vertexColors:true,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:.95}));}
+ group.add(pts(posA,colA,2.4));group.add(pts(posB,colB,2.4));
+ const rg=new THREE.BufferGeometry();rg.setAttribute('position',new THREE.Float32BufferAttribute(rungPos,3));rg.setAttribute('color',new THREE.Float32BufferAttribute(rungCol,3));
+ group.add(new THREE.LineSegments(rg,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.34})));
+ // gold driver node
+ const driver=new THREE.Mesh(new THREE.SphereGeometry(1.5,20,20),new THREE.MeshBasicMaterial({color:0xE9D7A6}));group.add(driver);
+ // starfield
+ const sp=[];for(let i=0;i<420;i++){sp.push((Math.random()-.5)*200,(Math.random()-.5)*160,(Math.random()-.5)*160-30);}
+ const sg2=new THREE.BufferGeometry();sg2.setAttribute('position',new THREE.Float32BufferAttribute(sp,3));
+ scene.add(new THREE.Points(sg2,new THREE.PointsMaterial({size:.7,map:sprite,color:0x6f8bbf,transparent:true,opacity:.6,depthWrite:false,blending:THREE.AdditiveBlending})));
+ let mx=0,my=0;addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5);my=(e.clientY/innerHeight-.5);});
+ function resize(){renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();}
+ addEventListener('resize',resize);resize();
+ let t=0;(function loop(){t+=.006;group.rotation.y=t;group.rotation.z=Math.sin(t*.3)*.08;
+   const dt=(Math.sin(t*6)*.5+.5);driver.scale.setScalar(1+dt*.5);
+   const da=(t*turns*Math.PI*2*0.52);driver.position.set(Math.cos(da)*R,0,Math.sin(da)*R);
+   cam.position.x+=(mx*10-cam.position.x)*.04;cam.position.y+=(-my*8-cam.position.y)*.04;cam.lookAt(0,0,0);
+   const op=Math.max(0,1-scrollY/700);canvas.style.opacity=op;
+   renderer.render(scene,cam);requestAnimationFrame(loop);})();
+})();
+
+/* ---------- correlation vs causation demo ---------- */
+(function(){const c=document.getElementById('dag');if(!c)return;const x=c.getContext('2d');let mode='corr',t=0;const R=devicePixelRatio||1;
+ function fit(){c.width=c.offsetWidth*R;c.height=340*R;}fit();addEventListener('resize',fit);
+ const cx=()=>c.width/2,cy=()=>c.height/2,rad=()=>Math.min(c.width,c.height)*.34;let P=[];
+ function place(){P=[];for(let i=0;i<9;i++){const a=i/9*Math.PI*2;P.push({x:cx()+Math.cos(a)*rad(),y:cy()+Math.sin(a)*rad()*.9,d:i===0})}}
+ const corrE=[];for(let i=0;i<9;i++)for(let j=i+1;j<9;j++)if(Math.random()<.5)corrE.push([i,j]);
+ const dagE=[[0,1],[0,2],[1,3],[2,4],[0,5],[5,6],[4,7],[3,8]];
+ function arr(a,b){const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy),ux=dx/d,uy=dy/d,ex=b.x-ux*13*R,ey=b.y-uy*13*R;x.beginPath();x.moveTo(a.x+ux*13*R,a.y+uy*13*R);x.lineTo(ex,ey);x.stroke();x.beginPath();x.moveTo(ex,ey);x.lineTo(ex-ux*8*R-uy*4*R,ey-uy*8*R+ux*4*R);x.lineTo(ex-ux*8*R+uy*4*R,ey-uy*8*R-ux*4*R);x.closePath();x.fill();}
+ function draw(){place();x.clearRect(0,0,c.width,c.height);t+=.02;const E=mode==='corr'?corrE:dagE;
+   E.forEach(([i,j])=>{const a=P[i],b=P[j];if(mode==='corr'){x.strokeStyle='rgba(120,140,180,.4)';x.lineWidth=R;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}else{x.strokeStyle='rgba(90,231,236,.9)';x.fillStyle='rgba(90,231,236,.9)';x.lineWidth=1.6*R;arr(a,b);}});
+   P.forEach(p=>{const isD=p.d&&mode==='caus';x.fillStyle=isD?'#FF3B5C':(mode==='caus'?'#E9D7A6':'rgba(150,170,210,.9)');const r=(isD?11:8)*R*(isD?(1+.09*Math.sin(t*3)):1);x.beginPath();x.arc(p.x,p.y,r,0,7);x.fill();if(isD){x.strokeStyle='rgba(255,59,92,.4)';x.lineWidth=2*R;x.beginPath();x.arc(p.x,p.y,r+6*R+2*Math.sin(t*3)*R,0,7);x.stroke();}});
+   if(mode==='caus'){x.fillStyle='#E9D7A6';x.font=`${13*R}px Manrope,sans-serif`;x.fillText('resistance driver',P[0].x-44*R,P[0].y-18*R);}
+   requestAnimationFrame(draw);}
+ window.setMode=function(m){mode=m;document.getElementById('segCorr').classList.toggle('on',m==='corr');document.getElementById('segCaus').classList.toggle('on',m==='caus');document.getElementById('demoNote').textContent=m==='corr'?'Correlation view: dense, undirected, the resistance driver hidden among passengers.':'Causal view: pruned and oriented, the red node is the driver your next therapy should target.';};
+ draw();})();
+</script>
+</body>
+</html>
