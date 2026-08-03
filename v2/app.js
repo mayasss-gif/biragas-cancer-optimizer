@@ -8,7 +8,7 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=9")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=10")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
@@ -118,12 +118,28 @@ const PATTERNS=[
  ["P6 · Combination without a causal rationale","Two agents are combined on additive hope rather than predicted synergy, adding toxicity without adding efficacy.","Counterfactual combination design predicts where a second perturbation adds non-redundant leverage versus where it only stacks toxicity.","var(--gold-deep)"],
 ];
 function buildPatterns(){
-  $("#patterns").innerHTML=PATTERNS.map(([t,fail,fix,col])=>`
-    <div class="pat-card" style="border-left-color:${col}">
+  const counts={}; PATHS.forEach(p=>counts[p.biragas_pattern]=(counts[p.biragas_pattern]||0)+1);
+  const grid=$("#patterns");
+  grid.innerHTML=PATTERNS.map(([t,fail,fix,col])=>{
+    const code=t.split(" ")[0]; const n=counts[code]||0;
+    return `<div class="pat-card" style="border-left-color:${col}">
       <h4>${esc(t)}</h4>
       <div class="fail">The failure: ${esc(fail)}</div>
       <div class="fix"><b>Where a causal framework helps:</b> ${esc(fix)}</div>
-    </div>`).join("");
+      <button class="pat-filter" data-pat="${code}" style="color:${col}">See ${n} ${code} pathways in the atlas →</button>
+    </div>`;
+  }).join("");
+  $$(".pat-filter",grid).forEach(btn=>btn.onclick=()=>filterByPattern(btn.dataset.pat));
+}
+function filterByPattern(code){
+  $$(".cat").forEach(r=>r.classList.remove("on"));
+  const q=$("#q"); if(q) q.value="";
+  const hit=PATHS.filter(p=>p.biragas_pattern===code);
+  const main=$("#main");
+  main.innerHTML=`<div class="cat-title"><h3>BiRAGAS pattern: ${esc(code)}</h3><span style="color:var(--slate)">${hit.length} pathway${hit.length!=1?"s":""} across all cancers</span></div>
+    <div class="grid">${hit.map(figCard).join("")}</div>`;
+  wire(main);
+  document.getElementById("atlas").scrollIntoView({behavior:"smooth"});
 }
 
 const TAXONOMY=[
