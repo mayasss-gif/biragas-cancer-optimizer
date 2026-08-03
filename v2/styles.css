@@ -40,7 +40,7 @@ nav.links a:hover{background:var(--gold-soft);text-decoration:none}
   background:#fff;border:1.5px solid var(--line);border-radius:11px;color:var(--navy);font-size:22px;line-height:1;cursor:pointer}
 .navtoggle:hover{border-color:var(--gold)}
 /* keep sticky header from covering anchored sections */
-section[id],a#top{scroll-margin-top:72px}
+section[id],a#top,#main{scroll-margin-top:80px}
 
 /* hero */
 .hero{position:relative;overflow:hidden;
