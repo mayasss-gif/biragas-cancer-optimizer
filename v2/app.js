@@ -1,5 +1,5 @@
 "use strict";
-// BiRAGAS Cancer Optimizer v2 - static, data-driven atlas.
+// BiRAGAS Cancer Optimizer v2, static, data-driven atlas.
 const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>(s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 let PATHS=[], BYCAT={};
@@ -8,7 +8,7 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=4")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=5")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
@@ -17,7 +17,7 @@ async function init(){
   // hero fallback
   const hero=$("#heroFig"); hero.onerror=()=>{ const f=PATHS.find(p=>p.img); if(f) hero.src=f.img; };
   // default category
-  const first = (BYCAT["Lung - NSCLC"] ? "Lung - NSCLC" : Object.keys(BYCAT).sort()[0]);
+  const first = (BYCAT["Lung, NSCLC"] ? "Lung, NSCLC" : Object.keys(BYCAT).sort()[0]);
   selectCategory(first);
   $("#q").addEventListener("input", onSearch);
 }
@@ -100,7 +100,7 @@ function lightbox(src, figEl){
   const drug=figEl?$(".drug",figEl).textContent:""; const ct=figEl?$(".ct",figEl).textContent:"";
   const name=src.split("/").pop().replace(".jpg","");
   const b=document.createElement("div"); b.className="lb";
-  b.innerHTML=`<span class="x">×</span><div><img src="${src}"><div class="cap"><b>${esc(drug)}</b> - ${esc(ct)}</div>
+  b.innerHTML=`<span class="x">×</span><div><img src="${src}"><div class="cap"><b>${esc(drug)}</b>, ${esc(ct)}</div>
      <div class="lbdl"><button class="btn btn-teal btn-sm" id="lbpng">Download PNG</button>
      <a class="btn btn-ghost btn-sm" href="${src}" download="BiRAGAS_${name}.jpg">Download JPEG</a></div></div>`;
   b.onclick=e=>{ if(e.target===b||e.target.className==="x") b.remove(); };
@@ -109,12 +109,12 @@ function lightbox(src, figEl){
 }
 
 const PATTERNS=[
- ["P1 · Correlate, not a causal driver","The target is associated with the disease but is not the node whose perturbation changes the outcome - blocking it moves a biomarker, not the disease.","Causal-driver identification separates the driver from the correlated noise, with an evidence trail - the false positive down-ranked before a $100M Phase 3.","var(--coral)"],
- ["P2 · Single-node blockade of a redundant pathway","The biology routes around a single blocked node through parallel / compensatory pathways - target engagement without efficacy.","In-silico perturbation across the causal network tests whether knocking out one node collapses the phenotype or the flux simply reroutes.","var(--teal)"],
- ["P3 · Unstratified / biomarker-diluted population","The drug works in a molecularly-defined subset, but an all-comers trial dilutes the signal below the endpoint threshold.","Patient stratification identifies the causal subgroup in whom the target is the driver - converting an efficacy failure into a smaller, winnable evaluation.","var(--sky)"],
- ["P4 · Mechanism-based toxicity / benefit-risk","Efficacy may be real, but an on-mechanism safety liability sinks the benefit-risk - sometimes only visible at Phase-3 scale.","Multi-evidence validation reasons about adverse-event biology in the target's neighbourhood, turning a late surprise into an earlier go / no-go.","var(--violet)"],
+ ["P1 · Correlate, not a causal driver","The target is associated with the disease but is not the node whose perturbation changes the outcome, blocking it moves a biomarker, not the disease.","Causal-driver identification separates the driver from the correlated noise, with an evidence trail, the false positive down-ranked before a $100M Phase 3.","var(--coral)"],
+ ["P2 · Single-node blockade of a redundant pathway","The biology routes around a single blocked node through parallel / compensatory pathways, target engagement without efficacy.","In-silico perturbation across the causal network tests whether knocking out one node collapses the phenotype or the flux simply reroutes.","var(--teal)"],
+ ["P3 · Unstratified / biomarker-diluted population","The drug works in a molecularly-defined subset, but an all-comers trial dilutes the signal below the endpoint threshold.","Patient stratification identifies the causal subgroup in whom the target is the driver, converting an efficacy failure into a smaller, winnable evaluation.","var(--sky)"],
+ ["P4 · Mechanism-based toxicity / benefit-risk","Efficacy may be real, but an on-mechanism safety liability sinks the benefit-risk, sometimes only visible at Phase-3 scale.","Multi-evidence validation reasons about adverse-event biology in the target's neighbourhood, turning a late surprise into an earlier go / no-go.","var(--violet)"],
  ["P5 · Endpoint / placebo heterogeneity (PFS-OS discordance)","A surrogate improves but survival does not; mixed endophenotypes and a variable placebo response swamp a genuine effect.","Endophenotype stratification ties the endpoint to the active molecular driver, tightening both the population and the readout.","var(--green)"],
- ["P6 · Combination without a causal rationale","Two agents are combined on additive hope rather than predicted synergy - adding toxicity without adding efficacy.","Counterfactual combination design predicts where a second perturbation adds non-redundant leverage versus where it only stacks toxicity.","var(--gold-deep)"],
+ ["P6 · Combination without a causal rationale","Two agents are combined on additive hope rather than predicted synergy, adding toxicity without adding efficacy.","Counterfactual combination design predicts where a second perturbation adds non-redundant leverage versus where it only stacks toxicity.","var(--gold-deep)"],
 ];
 function buildPatterns(){
   $("#patterns").innerHTML=PATTERNS.map(([t,fail,fix,col])=>`
