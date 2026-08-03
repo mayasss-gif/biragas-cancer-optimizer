@@ -8,7 +8,7 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=22")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=23")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
@@ -167,4 +167,19 @@ function filterByClass(cls){
   showFiltered(`Resistance class: ${esc(cls)}`, hit);
 }
 
-init().catch(e=>{ $("#main").innerHTML=`<p style="color:#c00">Failed to load atlas: ${esc(e.message)}</p>`; });
+// --- page chrome: always open at the top + mobile nav drawer ---
+if("scrollRestoration" in history) history.scrollRestoration="manual";
+function scrollTop(){ try{ window.scrollTo({top:0,left:0,behavior:"instant"}); }catch(_){ window.scrollTo(0,0); } }
+function setupNav(){
+  const t=$("#navToggle"), n=$("#navLinks");
+  if(!t||!n) return;
+  const close=()=>{ n.classList.remove("open"); t.setAttribute("aria-expanded","false"); };
+  t.onclick=()=>{ const open=n.classList.toggle("open"); t.setAttribute("aria-expanded",open?"true":"false"); };
+  $$("a",n).forEach(a=>a.addEventListener("click",close));
+  window.addEventListener("resize",()=>{ if(window.innerWidth>820) close(); });
+}
+setupNav();
+scrollTop();
+window.addEventListener("load",scrollTop);
+
+init().then(scrollTop).catch(e=>{ $("#main").innerHTML=`<p style="color:#c00">Failed to load atlas: ${esc(e.message)}</p>`; });
