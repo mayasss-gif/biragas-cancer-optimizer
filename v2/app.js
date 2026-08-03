@@ -8,7 +8,7 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=10")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=11")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
@@ -73,15 +73,27 @@ function selectCategory(cat){
   $$(".cat").forEach(r=>r.classList.toggle("on", r.dataset.cat===cat));
   renderGrid(cat, BYCAT[cat]||[]);
 }
+function backToAll(){
+  const q=$("#q"); if(q) q.value="";
+  selectCategory(BYCAT["Lung, NSCLC"] ? "Lung, NSCLC" : Object.keys(BYCAT).sort()[0]);
+  document.getElementById("atlas").scrollIntoView({behavior:"smooth"});
+}
+function showFiltered(titleHtml, hit, opts={}){
+  const sub = opts.sub || `${hit.length} pathway${hit.length!=1?"s":""} across all cancers`;
+  const main=$("#main");
+  main.innerHTML=`<div class="cat-title"><h3>${titleHtml}</h3><span style="color:var(--slate)">${sub}</span>
+    <button class="backall" id="backAll">← Back to all cancers</button></div>
+    <div class="grid">${hit.map(figCard).join("")}</div>`;
+  wire(main);
+  const ba=$("#backAll"); if(ba) ba.onclick=backToAll;
+  if(opts.scroll!==false) document.getElementById("atlas").scrollIntoView({behavior:"smooth"});
+}
 function onSearch(e){
   const q=e.target.value.trim().toLowerCase();
   if(!q){ const on=$(".cat.on"); selectCategory(on?on.dataset.cat:Object.keys(BYCAT).sort()[0]); return; }
   $$(".cat").forEach(r=>r.classList.remove("on"));
   const hit=PATHS.filter(p=>[p.drug,p.cancer_type,p.target_mechanism,p.resistance_mechanism,p.resistance_class,p.category,p.citation].join(" ").toLowerCase().includes(q));
-  const main=$("#main");
-  main.innerHTML=`<div class="cat-title"><h3>Search: “${esc(q)}”</h3><span style="color:var(--slate)">${hit.length} match${hit.length!=1?"es":""}</span></div>
-    <div class="grid">${hit.map(figCard).join("")}</div>`;
-  wire(main);
+  showFiltered(`Search: “${esc(q)}”`, hit, {sub:`${hit.length} match${hit.length!=1?"es":""}`, scroll:false});
 }
 function wire(root){
   $$(".imgbx",root).forEach(b=>b.onclick=()=>lightbox(b.dataset.full, b.closest(".fig")));
@@ -135,11 +147,7 @@ function filterByPattern(code){
   $$(".cat").forEach(r=>r.classList.remove("on"));
   const q=$("#q"); if(q) q.value="";
   const hit=PATHS.filter(p=>p.biragas_pattern===code);
-  const main=$("#main");
-  main.innerHTML=`<div class="cat-title"><h3>BiRAGAS pattern: ${esc(code)}</h3><span style="color:var(--slate)">${hit.length} pathway${hit.length!=1?"s":""} across all cancers</span></div>
-    <div class="grid">${hit.map(figCard).join("")}</div>`;
-  wire(main);
-  document.getElementById("atlas").scrollIntoView({behavior:"smooth"});
+  showFiltered(`BiRAGAS pattern: ${esc(code)}`, hit);
 }
 
 const TAXONOMY=[
@@ -166,11 +174,7 @@ function filterByClass(cls){
   $$(".cat").forEach(r=>r.classList.remove("on"));
   const q=$("#q"); if(q) q.value="";
   const hit=PATHS.filter(p=>p.resistance_class===cls);
-  const main=$("#main");
-  main.innerHTML=`<div class="cat-title"><h3>Resistance class: ${esc(cls)}</h3><span style="color:var(--slate)">${hit.length} pathway${hit.length!=1?"s":""} across all cancers</span></div>
-    <div class="grid">${hit.map(figCard).join("")}</div>`;
-  wire(main);
-  document.getElementById("atlas").scrollIntoView({behavior:"smooth"});
+  showFiltered(`Resistance class: ${esc(cls)}`, hit);
 }
 
 init().catch(e=>{ $("#main").innerHTML=`<p style="color:#c00">Failed to load atlas: ${esc(e.message)}</p>`; });
