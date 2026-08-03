@@ -105,7 +105,7 @@ h2.title{font-size:clamp(26px,3.4vw,36px);margin:6px 0 10px}
 .pattern-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px}
 .pat-card{background:#fff;border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow-sm)}
 .pat-card h4{font-size:17px;margin:0 0 4px}
-.pat-card .fail{color:var(--coral);font-weight:700;font-size:13px}
+.pat-card .fail{color:var(--teal);font-weight:700;font-size:13px}
 .pat-card .fix{color:var(--slate);font-size:14px;margin-top:8px}
 .pat-card .fix b{color:var(--navy)}
 
