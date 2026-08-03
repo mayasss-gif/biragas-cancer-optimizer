@@ -8,7 +8,7 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=23")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=24")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
