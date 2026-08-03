@@ -8,7 +8,7 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=25")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=26")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
@@ -33,7 +33,7 @@ function buildSidebar(){
     Object.keys(cats[g]).sort().forEach(c=>{
       const row=document.createElement("div"); row.className="cat"; row.dataset.cat=c;
       row.innerHTML=`<span>${esc(c)}</span><span class="n">${cats[g][c]}</span>`;
-      row.onclick=()=>selectCategory(c);
+      row.onclick=()=>{ selectCategory(c); scrollToFigures(); };
       side.appendChild(row);
     });
   });
@@ -72,9 +72,14 @@ function selectCategory(cat){
   $$(".cat").forEach(r=>r.classList.toggle("on", r.dataset.cat===cat));
   renderGrid(cat, BYCAT[cat]||[]);
 }
+// on phones the sidebar sits above the figures, so jump the page down to the images
+function scrollToFigures(){
+  if(window.matchMedia("(max-width:960px)").matches)
+    document.getElementById("main").scrollIntoView({behavior:"smooth",block:"start"});
+}
 function backToAll(){
   selectCategory(BYCAT["Lung, NSCLC"] ? "Lung, NSCLC" : Object.keys(BYCAT).sort()[0]);
-  document.getElementById("atlas").scrollIntoView({behavior:"smooth"});
+  document.getElementById("main").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function showFiltered(titleHtml, hit, opts={}){
   const sub = opts.sub || `${hit.length} pathway${hit.length!=1?"s":""} across all cancers`;
@@ -84,7 +89,7 @@ function showFiltered(titleHtml, hit, opts={}){
     <div class="grid">${hit.map(figCard).join("")}</div>`;
   wire(main);
   const ba=$("#backAll"); if(ba) ba.onclick=backToAll;
-  if(opts.scroll!==false) document.getElementById("atlas").scrollIntoView({behavior:"smooth"});
+  if(opts.scroll!==false) document.getElementById("main").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function wire(root){
   $$(".imgbx",root).forEach(b=>b.onclick=()=>lightbox(b.dataset.full, b.closest(".fig")));
