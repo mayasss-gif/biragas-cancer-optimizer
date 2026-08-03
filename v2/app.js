@@ -8,7 +8,7 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=8")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=9")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
@@ -143,7 +143,18 @@ const TAXONOMY=[
 ];
 function buildTaxonomy(){
   const tb=$("#tax"); if(!tb) return;
-  tb.innerHTML=TAXONOMY.map(([c,n,d])=>`<tr><td class="cls">${esc(c)}</td><td><span class="n">${n}</span></td><td class="def">${esc(d)}</td></tr>`).join("");
+  tb.innerHTML=TAXONOMY.map(([c,n,d])=>`<tr><td><button class="cls-link" data-cls="${esc(c)}" title="Show all ${n} pathways in this class">${esc(c)}</button></td><td><span class="n">${n}</span></td><td class="def">${esc(d)}</td></tr>`).join("");
+  $$(".cls-link",tb).forEach(btn=>btn.onclick=()=>filterByClass(btn.dataset.cls));
+}
+function filterByClass(cls){
+  $$(".cat").forEach(r=>r.classList.remove("on"));
+  const q=$("#q"); if(q) q.value="";
+  const hit=PATHS.filter(p=>p.resistance_class===cls);
+  const main=$("#main");
+  main.innerHTML=`<div class="cat-title"><h3>Resistance class: ${esc(cls)}</h3><span style="color:var(--slate)">${hit.length} pathway${hit.length!=1?"s":""} across all cancers</span></div>
+    <div class="grid">${hit.map(figCard).join("")}</div>`;
+  wire(main);
+  document.getElementById("atlas").scrollIntoView({behavior:"smooth"});
 }
 
 init().catch(e=>{ $("#main").innerHTML=`<p style="color:#c00">Failed to load atlas: ${esc(e.message)}</p>`; });
