@@ -8,7 +8,7 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=15")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=16")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
@@ -114,11 +114,12 @@ function lightbox(src, figEl){
 
 const PATTERNS=[
  ["P1 · Correlate, not a causal driver","The target is associated with the disease but is not the node whose perturbation changes the outcome, blocking it moves a biomarker, not the disease.","Causal-driver identification separates the driver from the correlated noise, with an evidence trail, the false positive down-ranked before a $100M Phase 3.","#3DBB6B"],
- ["P2 · Single-node blockade defeated (bypass or on-target escape)","The single blocked node stops controlling the disease: the biology routes around it through a parallel or compensatory pathway, or the target itself escapes through an acquired on-target mutation (a gatekeeper or binding-site substitution) or antigen loss, so signaling is restored despite target engagement.","In-silico perturbation across the causal network tests whether knocking out one node collapses the phenotype or the flux simply reroutes, anticipating the escape route before it emerges.","var(--teal)"],
+ ["P2 · Single-node blockade bypassed by a parallel route","The blocked node stays inhibited, but the biology reroutes around it: a bypass receptor or downstream mutation, a compensatory feedback loop, or a lineage switch that abandons the target dependency, so the phenotype persists despite target engagement.","In-silico perturbation across the causal network tests whether knocking out one node collapses the phenotype or the flux simply reroutes, and names the compensatory node to co-target.","var(--teal)"],
  ["P3 · Unstratified / biomarker-diluted population","The drug works in a molecularly-defined subset, but an all-comers trial dilutes the signal below the endpoint threshold.","Patient stratification identifies the causal subgroup in whom the target is the driver, converting an efficacy failure into a smaller, winnable evaluation.","var(--sky)"],
  ["P4 · Mechanism-based toxicity / benefit-risk","Efficacy may be real, but an on-mechanism safety liability sinks the benefit-risk, sometimes only visible at Phase-3 scale.","Multi-evidence validation reasons about adverse-event biology in the target's neighbourhood, turning a late surprise into an earlier go / no-go.","var(--violet)"],
  ["P5 · Endpoint / placebo heterogeneity (PFS-OS discordance)","A surrogate improves but survival does not; mixed endophenotypes and a variable placebo response swamp a genuine effect.","Endophenotype stratification ties the endpoint to the active molecular driver, tightening both the population and the readout.","var(--green)"],
  ["P6 · Combination without a causal rationale","Two agents are combined on additive hope rather than predicted synergy, adding toxicity without adding efficacy.","Counterfactual combination design predicts where a second perturbation adds non-redundant leverage versus where it only stacks toxicity.","var(--gold-deep)"],
+ ["P7 · Acquired on-target escape (resistance mutation or antigen loss)","The target stays the real driver, but the tumor alters the target itself so the drug no longer engages it: an acquired on-target resistance mutation (a gatekeeper or binding-site substitution that restores the target's activity) or loss of the targeted antigen after immune pressure.","Escape-aware target design, the causal model flags escape-prone residues and epitopes so a next-generation binder or a multi-antigen strategy is chosen before the resistant clone emerges.","var(--coral)"],
 ];
 function buildPatterns(){
   const counts={}; PATHS.forEach(p=>counts[p.biragas_pattern]=(counts[p.biragas_pattern]||0)+1);
