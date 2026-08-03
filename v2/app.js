@@ -8,7 +8,7 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=17")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=18")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
@@ -119,7 +119,7 @@ const PATTERNS=[
  ["P4 · Mechanism-based toxicity / benefit-risk","Efficacy may be real, but an on-mechanism safety liability sinks the benefit-risk, sometimes only visible at Phase-3 scale.","Multi-evidence validation reasons about adverse-event biology in the target's neighbourhood, turning a late surprise into an earlier go / no-go.","var(--violet)"],
  ["P5 · Endpoint / placebo heterogeneity (PFS-OS discordance)","A surrogate improves but survival does not; mixed endophenotypes and a variable placebo response swamp a genuine effect.","Endophenotype stratification ties the endpoint to the active molecular driver, tightening both the population and the readout.","var(--green)"],
  ["P6 · Combination without a causal rationale","Two agents are combined on additive hope rather than predicted synergy, adding toxicity without adding efficacy.","Counterfactual combination design predicts where a second perturbation adds non-redundant leverage versus where it only stacks toxicity.","var(--gold-deep)"],
- ["P7 · Acquired on-target escape (resistance mutation or antigen loss)","The target stays the real driver, but the tumor alters the target itself so the drug no longer engages it: an acquired on-target resistance mutation (a gatekeeper or binding-site substitution that restores the target's activity) or loss of the targeted antigen after immune pressure.","Escape-aware target design, the causal model flags escape-prone residues and epitopes so a next-generation binder or a multi-antigen strategy is chosen before the resistant clone emerges.","#2A5BD7"],
+ ["P7 · Acquired on-target escape (resistance mutation or antigen loss)","The target stays the real driver, but the tumor alters the target itself so the drug no longer engages it: an acquired on-target resistance mutation (a gatekeeper or binding-site substitution that restores the target's activity) or loss of the targeted antigen after immune pressure.","Escape-aware target design, the causal model flags escape-prone residues and epitopes so a next-generation binder or a multi-antigen strategy is chosen before the resistant clone emerges.","#1E3A8A"],
 ];
 function buildPatterns(){
   const counts={}; PATHS.forEach(p=>counts[p.biragas_pattern]=(counts[p.biragas_pattern]||0)+1);
