@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BiRAGAS Cancer Optimizer, Failed therapies, re-read by causal inference</title>
 <meta name="description" content="An atlas of failed cancer therapies and their resistance mechanisms across 27 cancer types, and how the BiRAGAS causal-inference platform can help physicians re-read them for patients who have run out of options.">
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
 
@@ -85,6 +85,17 @@
     <h2 class="title">Six recurring failure patterns, and the causal capability that addresses each</h2>
     <p class="lede">The BiRAGAS commentary below is <b>retrospective and illustrative</b>: it names the class of signal a causal-inference platform is built to surface. It is not a claim that BiRAGAS prospectively predicted any specific trial.</p>
     <div class="pattern-grid" id="patterns"></div>
+
+    <div style="margin-top:44px">
+      <span class="section-tag">Resistance taxonomy</span>
+      <h2 class="title" style="font-size:clamp(22px,2.8vw,30px)">Every failure, classified: the 13 resistance mechanisms</h2>
+      <p class="lede">Each of the 209 pathways is labelled with the mechanism class that best explains its failure, most-represented first.</p>
+      <div class="tax-wrap">
+        <table class="tax"><thead><tr><th>Resistance class</th><th>N</th><th>Definition &amp; canonical oncology examples</th></tr></thead>
+          <tbody id="tax"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -151,6 +162,6 @@
 </footer>
 
 <div id="toast" class="toast hidden"></div>
-<script src="app.js?v=7"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

@@ -8,12 +8,13 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=7")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=8")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
   buildSidebar();
   buildPatterns();
+  buildTaxonomy();
   // hero fallback
   const hero=$("#heroFig"); hero.onerror=()=>{ const f=PATHS.find(p=>p.img); if(f) hero.src=f.img; };
   // default category
@@ -123,6 +124,26 @@ function buildPatterns(){
       <div class="fail">The failure: ${esc(fail)}</div>
       <div class="fix"><b>Where a causal framework helps:</b> ${esc(fix)}</div>
     </div>`).join("");
+}
+
+const TAXONOMY=[
+ ["correlate-not-driver",28,"Target/biomarker robustly associated with disease but not the causal dependency (IGF-1R, IDO1, MET-IHC, Hedgehog in CRC, cancer vaccines to passenger antigens)."],
+ ["target-mutation",26,"Secondary/gatekeeper/solvent-front mutation in the drug target restores signaling or blocks binding (e.g. EGFR T790M/C797S, BCR-ABL1 T315I, ALK G1202R, BTK C481S, ESR1, AR-V7)."],
+ ["TME/immune-exclusion",22,"A cold, T-cell-excluded or immunosuppressive microenvironment (low TMB, MDSC/TAM, WNT/beta-catenin, PTEN loss, desmoplasia, hypoxia)."],
+ ["on-mechanism-toxicity",21,"An on-target/on-mechanism safety liability (paradoxical MAPK SCC, cardiac/CNS off-tumor T-cell attack, arterial thrombosis, checkpoint autoimmunity)."],
+ ["bypass/parallel-pathway",19,"A parallel RTK/effector reactivates downstream signaling around the blocked node (e.g. MET/HER2 amplification, RAS/PI3K, CDK2/CCNE1)."],
+ ["combination-no-rationale",19,"Agents combined on additive hope; add toxicity/no synergy (IDO1+PD-1, checkpoint+chemo unselected, vaccine+chemo)."],
+ ["pharmacologic/efflux-metabolism",18,"Drug efflux (P-gp/ABCB1, MRP, BCRP) or altered uptake/metabolism reduces intracellular exposure."],
+ ["population-dilution",13,"Right drug, wrong (unenriched) population; responders averaged away below the endpoint threshold."],
+ ["antigen-escape",11,"Loss/downregulation of the targeted antigen or its presentation (CD19 loss, EGFRvIII loss, BCMA loss, B2M/HLA loss)."],
+ ["pathway-redundancy",10,"Multiple parallel routes to the same phenotype make single-node blockade insufficient (integrins, angiogenic ligands, lymphocyte homing)."],
+ ["DNA-repair/apoptosis-evasion",10,"Enhanced DNA-damage repair or blocked apoptosis (ERCC1/HR, BRCA reversion, DNA-PK/ATM, TP53/BCL2 family)."],
+ ["feedback-reactivation",8,"Blocking one node relieves feedback and reactivates the pathway (BRAF→EGFR in colon, MEK→RTK, adaptive checkpoint upregulation)."],
+ ["lineage-plasticity/transformation",4,"Cells switch identity to escape target dependence (adeno-to-SCLC, neuroendocrine prostate, B-ALL to myeloid lineage switch)."],
+];
+function buildTaxonomy(){
+  const tb=$("#tax"); if(!tb) return;
+  tb.innerHTML=TAXONOMY.map(([c,n,d])=>`<tr><td class="cls">${esc(c)}</td><td><span class="n">${n}</span></td><td class="def">${esc(d)}</td></tr>`).join("");
 }
 
 init().catch(e=>{ $("#main").innerHTML=`<p style="color:#c00">Failed to load atlas: ${esc(e.message)}</p>`; });
