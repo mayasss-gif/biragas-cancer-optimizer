@@ -8,7 +8,7 @@ const GROUPS=[["solid","Solid tumors"],["heme","Hematologic (non-solid)"],["pan"
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add("hidden"),2600);}
 
 async function init(){
-  PATHS = await (await fetch("assets/pathways.json?v=11")).json();
+  PATHS = await (await fetch("assets/pathways.json?v=12")).json();
   // group
   BYCAT={};
   PATHS.forEach(p=>{ (BYCAT[p.category]=BYCAT[p.category]||[]).push(p); });
@@ -20,7 +20,6 @@ async function init(){
   // default category
   const first = (BYCAT["Lung, NSCLC"] ? "Lung, NSCLC" : Object.keys(BYCAT).sort()[0]);
   selectCategory(first);
-  $("#q").addEventListener("input", onSearch);
 }
 
 function groupOf(cat){ const any=BYCAT[cat][0]; return any.group; }
@@ -34,7 +33,7 @@ function buildSidebar(){
     Object.keys(cats[g]).sort().forEach(c=>{
       const row=document.createElement("div"); row.className="cat"; row.dataset.cat=c;
       row.innerHTML=`<span>${esc(c)}</span><span class="n">${cats[g][c]}</span>`;
-      row.onclick=()=>{ $("#q").value=""; selectCategory(c); };
+      row.onclick=()=>selectCategory(c);
       side.appendChild(row);
     });
   });
@@ -74,7 +73,6 @@ function selectCategory(cat){
   renderGrid(cat, BYCAT[cat]||[]);
 }
 function backToAll(){
-  const q=$("#q"); if(q) q.value="";
   selectCategory(BYCAT["Lung, NSCLC"] ? "Lung, NSCLC" : Object.keys(BYCAT).sort()[0]);
   document.getElementById("atlas").scrollIntoView({behavior:"smooth"});
 }
@@ -87,13 +85,6 @@ function showFiltered(titleHtml, hit, opts={}){
   wire(main);
   const ba=$("#backAll"); if(ba) ba.onclick=backToAll;
   if(opts.scroll!==false) document.getElementById("atlas").scrollIntoView({behavior:"smooth"});
-}
-function onSearch(e){
-  const q=e.target.value.trim().toLowerCase();
-  if(!q){ const on=$(".cat.on"); selectCategory(on?on.dataset.cat:Object.keys(BYCAT).sort()[0]); return; }
-  $$(".cat").forEach(r=>r.classList.remove("on"));
-  const hit=PATHS.filter(p=>[p.drug,p.cancer_type,p.target_mechanism,p.resistance_mechanism,p.resistance_class,p.category,p.citation].join(" ").toLowerCase().includes(q));
-  showFiltered(`Search: “${esc(q)}”`, hit, {sub:`${hit.length} match${hit.length!=1?"es":""}`, scroll:false});
 }
 function wire(root){
   $$(".imgbx",root).forEach(b=>b.onclick=()=>lightbox(b.dataset.full, b.closest(".fig")));
@@ -145,7 +136,6 @@ function buildPatterns(){
 }
 function filterByPattern(code){
   $$(".cat").forEach(r=>r.classList.remove("on"));
-  const q=$("#q"); if(q) q.value="";
   const hit=PATHS.filter(p=>p.biragas_pattern===code);
   showFiltered(`BiRAGAS pattern: ${esc(code)}`, hit);
 }
@@ -172,7 +162,6 @@ function buildTaxonomy(){
 }
 function filterByClass(cls){
   $$(".cat").forEach(r=>r.classList.remove("on"));
-  const q=$("#q"); if(q) q.value="";
   const hit=PATHS.filter(p=>p.resistance_class===cls);
   showFiltered(`Resistance class: ${esc(cls)}`, hit);
 }
