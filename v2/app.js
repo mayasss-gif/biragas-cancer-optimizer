@@ -45,10 +45,12 @@ function figCard(p){
   const img = p.img
     ? `<div class="imgbx" data-full="${p.img}"><img loading="lazy" src="${p.img}" alt="${esc(p.drug)} mechanism"></div>`
     : `<div class="noimg">Illustration coming soon</div>`;
-  const dl = p.img ? `<div class="dl">
-      <button class="btn btn-teal btn-sm" data-png="${p.img}" data-name="${esc(slug(p))}">PNG</button>
-      <a class="btn btn-ghost btn-sm" href="${p.img}" download="BiRAGAS_${esc(slug(p))}.jpg">JPEG</a>
-    </div>` : "";
+  const gen = `<a class="btn btn-gold btn-sm" href="https://biragasillustrator.ai" target="_blank" rel="noopener" title="Create or regenerate this figure on the live BiRAGAS Illustrator engine">Generate ↗</a>`;
+  const dl = `<div class="dl">
+      ${p.img ? `<button class="btn btn-teal btn-sm" data-png="${p.img}" data-name="${esc(slug(p))}">PNG</button>
+      <a class="btn btn-ghost btn-sm" href="${p.img}" download="BiRAGAS_${esc(slug(p))}.jpg">JPEG</a>` : ""}
+      ${gen}
+    </div>`;
   return `<div class="fig">
     ${img}
     <div class="body">
